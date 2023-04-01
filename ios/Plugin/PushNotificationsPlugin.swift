@@ -42,32 +42,28 @@ public class PushNotificationsPlugin: CAPPlugin {
      * Register for push notifications
      */
     @objc func register(_ call: CAPPluginCall) {
-        
         guard let notificationHubName = call.options["notificationHubName"] as? String else {
-                    call.reject("Must provide notificationHubName")
-                    return
-                  }
-                guard let connectionString = call.options["connectionString"] as? String else {
-                    call.reject("Must provide connectionString")
-                    return
-                  }
-                
-                guard let deviceTag = call.options["deviceTag"] as? String else {
-                    call.reject("Must provide deviceTag")
-                    return
-                  }
-        
-        // Create with alert, badge and sound
-       let hubOptions = MSNotificationHubOptions(withOptions: [.alert, .badge, .sound])
+            call.reject("Must provide notificationHubName")
+            return
+        }
 
-       // Start SDK
-        
-               
-        
+        guard let connectionString = call.options["connectionString"] as? String else {
+            call.reject("Must provide connectionString")
+            return
+        }
+
+        guard let deviceTag = call.options["deviceTag"] as? String else {
+            call.reject("Must provide deviceTag")
+            return
+        }
+
+        // Create with alert, badge and sound
+        let hubOptions = MSNotificationHubOptions(withOptions: [.alert, .badge, .sound])
+
         DispatchQueue.main.async {
             MSNotificationHub.start(connectionString: connectionString, hubName: notificationHubName, options: hubOptions!)
+            MSNotificationHub.clearTags()
             MSNotificationHub.addTags(deviceTag.components(separatedBy: ","))
-            // UIApplication.shared.registerForRemoteNotifications()
         }
         call.resolve()
     }
