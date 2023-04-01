@@ -95,7 +95,7 @@ public class PushNotificationsPlugin extends Plugin {
 
         com.microsoft.windowsazure.messaging.notificationhubs.NotificationHub.start(this.getApplication(), notificationHubName, connectionString);
         com.microsoft.windowsazure.messaging.notificationhubs.NotificationHub.clearTags();
-        com.microsoft.windowsazure.messaging.notificationhubs.NotificationHub.addTag(deviceTag);
+        com.microsoft.windowsazure.messaging.notificationhubs.NotificationHub.addTags(deviceTag.split(",",-1));
 
        FirebaseInstanceId
             .getInstance()

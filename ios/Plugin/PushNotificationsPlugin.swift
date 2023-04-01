@@ -66,7 +66,7 @@ public class PushNotificationsPlugin: CAPPlugin {
         
         DispatchQueue.main.async {
             MSNotificationHub.start(connectionString: connectionString, hubName: notificationHubName, options: hubOptions!)
-            MSNotificationHub.addTags([deviceTag])
+            MSNotificationHub.addTags(deviceTag.components(separatedBy: ","))
             // UIApplication.shared.registerForRemoteNotifications()
         }
         call.resolve()
